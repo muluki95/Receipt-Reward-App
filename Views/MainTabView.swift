@@ -13,10 +13,10 @@ struct MainTabView: View {
     var body: some View {
         TabView{
             
-            ScanReceiptsView ()
-                .tabItem {
-                    Label("Scan", systemImage: "camera.fill")
-                }
+            //ScanReceiptsView ()
+              //  .tabItem {
+               //     Label("Scan", systemImage: "camera.fill")
+               // }
             
             //RewardsScreenView ()
              //    .tabItem {

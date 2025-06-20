@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReceiptDetailsRow: View {
     let receipt: ReceiptDetails
+    var redeemAction: (() -> Void)? = nil
     
     var body: some View {
         VStack(alignment: .leading){
@@ -17,6 +18,17 @@ struct ReceiptDetailsRow: View {
             Text("Total Amount: \(receipt.totalAmount, specifier: "%.2f")")
             Text("Points Earned: \(receipt.pointsEarned)")
             Text("Image URL: \(receipt.imageURL)")
+            
+            if let redeemAction = redeemAction {
+                Button("Redeem"){
+                    redeemAction()
+                }
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.blue)
+                .cornerRadius(5)
+                .frame(width:100)
+            }
         }
         .padding()
     }
