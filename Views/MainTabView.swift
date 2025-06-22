@@ -10,18 +10,29 @@ import SwiftUI
 
 
 struct MainTabView: View {
+    @ObservedObject var historyViewModel: HistoryViewModel
+    @State var selectedTab = 0
+    
     var body: some View {
-        TabView{
+        TabView(selection: $selectedTab){
             
-            //ScanReceiptsView ()
-              //  .tabItem {
-               //     Label("Scan", systemImage: "camera.fill")
-               // }
-            
-            //RewardsScreenView ()
-             //    .tabItem {
-              //  Label("Rewards", systemImage:"giftcard.fill")
-           // }
+            ScanReceiptsView (historyViewModel: historyViewModel, selectedTab: $selectedTab)
+                .tabItem {
+                    Label("Scan", systemImage:"camera.fill")
+                }
+                        .tag(0)
+            HistoryView(historyViewModel: historyViewModel)
+                .tabItem{
+                    Label("History", systemImage:"clock.fill")
+                }
+                        .tag(1)
+                        
+                }
+              
         }
     }
+
+
+#Preview {
+    MainTabView(historyViewModel: HistoryViewModel())
 }

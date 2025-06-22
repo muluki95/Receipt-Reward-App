@@ -4,9 +4,17 @@ import SwiftUI
 struct ScanReceiptsView: View {
     @State var scannedImage: UIImage?
     @State var isScanning = false
-    @StateObject var viewModel = ReceiptViewModel()
+    @StateObject var viewModel: ReceiptViewModel
     @ObservedObject var historyViewModel: HistoryViewModel
+    @Binding var selectedTab: Int
 
+    
+    init(historyViewModel: HistoryViewModel, selectedTab: Binding<Int>){
+        self.historyViewModel = historyViewModel
+        self._selectedTab = selectedTab
+        _viewModel = StateObject(wrappedValue:ReceiptViewModel(historyViewModel: historyViewModel))
+        
+    }
     var body: some View {
         NavigationView {
             VStack {
@@ -49,6 +57,10 @@ struct ScanReceiptsView: View {
             .navigationTitle(Text("Scan Receipts"))
             .onAppear {
                 viewModel.historyViewModel = historyViewModel
+                // 👇 Listen for new receipt & switch tab
+                        viewModel.onReceiptParsed = {
+                                    self.selectedTab = 1
+                                }
             }
             .sheet(isPresented: $isScanning) {
 #if targetEnvironment(simulator)
@@ -74,6 +86,6 @@ struct ScanReceiptsView: View {
 }
 
 #Preview {
-    ScanReceiptsView(historyViewModel: HistoryViewModel())
+    ScanReceiptsView(historyViewModel: HistoryViewModel(), selectedTab: .constant(0))
 }
 

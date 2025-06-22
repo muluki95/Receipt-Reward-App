@@ -12,20 +12,30 @@ class ReceiptViewModel: ObservableObject {
     @Published var receipt: ReceiptDetails?
     
     
-    var historyViewModel: HistoryViewModel?
+    var historyViewModel: HistoryViewModel
+    var onReceiptParsed: (() -> Void)?
+
     private let receiptService = ReceiptService()
     
+    init(historyViewModel: HistoryViewModel){
+        self.historyViewModel = historyViewModel
+    }
     
+        
     func processScannedImage(_ image: UIImage, imageURL: String = "") {
         print(" Starting text extraction...")
         receiptService.extractReceiptDetails(from:image){[weak self] text in
             print("Extracted Text:\n\(text)")
             DispatchQueue.main.async {
-                let parsed = self?.receiptService.parseReceiptText(text, imageURL: imageURL)
-                print(" Parsed Receipt: \(String(describing: parsed))")
-                self?.receipt = parsed
-                self?.historyViewModel?.addForm(receipt: parsed!)
-                
+                guard let self = self else { return }
+                let parsed = self.receiptService.parseReceiptText(text, imageURL: imageURL)
+                print("Parsed Receipt: \(String(describing: parsed))")
+
+                self.receipt = parsed
+                self.historyViewModel.addForm(receipt: parsed)
+                print("scannedReceipts count: \(self.historyViewModel.scannedReceipts.count)")
+                self.onReceiptParsed?()
+
                 
             }
             
