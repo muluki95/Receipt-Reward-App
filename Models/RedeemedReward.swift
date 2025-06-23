@@ -18,10 +18,29 @@ struct RedeemedReward: Identifiable, Codable {
 
 extension RedeemedReward {
     init(from receipt: ReceiptDetails) {
-            self.id = UUID().uuidString
-            self.title = "Reward from \(receipt.storeName)"
-            self.imageName = "reward_icon" 
-            self.dateRedeemed = receipt.dateScanned
-            self.pointsUsed = receipt.pointsEarned
+        self.id = UUID().uuidString
+        self.imageName = receipt.storeName
+        
+        switch receipt.storeName.lowercased() {
+        case "starbucks":
+            self.title = "$10 Starbucks Card"
+            self.pointsUsed = 1000
+            
+        case "target":
+            self.title = "$5 Target Coupon"
+            self.pointsUsed = 500
+            
+        case "walmart":
+            self.title = "$10 Walmart Voucher"
+            self.pointsUsed = 1000
+            
+        default:
+            self.title = "General Reward"
+            self.pointsUsed = 750
         }
-}
+        
+        self.dateRedeemed = Date()
+    }
+    
+    }
+    

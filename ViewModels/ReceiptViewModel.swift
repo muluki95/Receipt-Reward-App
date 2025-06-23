@@ -31,10 +31,10 @@ class ReceiptViewModel: ObservableObject {
                 let parsed = self.receiptService.parseReceiptText(text, imageURL: imageURL)
                 print("Parsed Receipt: \(String(describing: parsed))")
 
-                self.receipt = parsed
-                self.historyViewModel.addForm(receipt: parsed)
+                self.receipt = parsed  // saves parsed receipt to viewmodel
+                self.historyViewModel.addForm(receipt: parsed)  // adds parsed receipt to historyviewmodel
                 print("scannedReceipts count: \(self.historyViewModel.scannedReceipts.count)")
-                self.onReceiptParsed?()
+                self.onReceiptParsed?()  // notifies to switch tab
 
                 
             }

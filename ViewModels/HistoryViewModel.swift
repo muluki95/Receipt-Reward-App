@@ -15,8 +15,7 @@ class HistoryViewModel: ObservableObject {
     
     func addForm(receipt: ReceiptDetails) {
         scannedReceipts.append(receipt)
-        let reward = RedeemedReward(from: receipt)
-        redeemedRewards.append(reward)
+        
         
     }
 }

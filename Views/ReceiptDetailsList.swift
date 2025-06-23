@@ -17,7 +17,7 @@ struct ReceiptDetailsList: View {
         VStack{
             Text("ReceiptDetailsList")
             
-            List(receipt) { item in
+            ForEach(receipt) { item in
                 ReceiptDetailsRow(receipt: item){
                     onRedeem(item)
                 }

@@ -12,7 +12,8 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             VStack{
-            Text("Total scanned: \(historyViewModel.scannedReceipts.count)")
+                
+                Text("Total scanned: \(historyViewModel.scannedReceipts.count)")
                     .foregroundColor(.gray)
                 List {
                     if !historyViewModel.scannedReceipts.isEmpty {
@@ -34,19 +35,17 @@ struct HistoryView: View {
                             )
                         }
                     }
-                }
-                if !historyViewModel.redeemedRewards.isEmpty {
-                    Section(header : Text("Redeemed Rewards")){
-                        RedeemedRewardList(redeemedrewards: historyViewModel.redeemedRewards)
+                    
+                    if !historyViewModel.redeemedRewards.isEmpty {
+                        Section(header : Text("Redeemed Rewards")){
+                            RedeemedRewardList(redeemedrewards: historyViewModel.redeemedRewards)
+                        }
                     }
                     
                 }
+                
+                .navigationTitle("History")
             }
-            
-            .navigationTitle("History")
         }
     }
-}
-#Preview {
-    HistoryView(historyViewModel: HistoryViewModel())
 }

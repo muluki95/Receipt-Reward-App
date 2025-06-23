@@ -15,6 +15,10 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
+            RewardsHomeScreen()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
             
             ScanReceiptsView (historyViewModel: historyViewModel, selectedTab: $selectedTab)
                 .tabItem {
