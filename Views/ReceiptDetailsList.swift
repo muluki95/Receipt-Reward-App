@@ -11,20 +11,28 @@ import SwiftUI
 
 struct ReceiptDetailsList: View {
     let receipt: [ReceiptDetails]
-    let onRedeem: (ReceiptDetails) -> Void
+    let viewModel: ReceiptViewModel
+    var onRedeem: ((ReceiptDetails) -> Void)? = nil
     
     var body: some View {
         VStack{
             Text("ReceiptDetailsList")
             
             ForEach(receipt) { item in
-                ReceiptDetailsRow(receipt: item){
-                    onRedeem(item)
-                }
+                ReceiptDetailsRow(
+                    receipt: item,
+                    
+                    onRedeem: {
+                        onRedeem?(item)
+                     },
+                    viewModel: viewModel,
+                    )
                 
             }
-            .navigationTitle("Receipts")
+            Spacer()
         }
+        .padding()
+        .navigationTitle("Receipts")
     }
     
 }

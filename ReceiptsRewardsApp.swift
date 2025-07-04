@@ -18,7 +18,7 @@ struct ReceiptsRewardsApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            MainTabView(historyViewModel: HistoryViewModel())
+            MainTabView(historyViewModel: HistoryViewModel(), receiptViewModel: ReceiptViewModel(historyViewModel: HistoryViewModel()))
         }
     }
 }

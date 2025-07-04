@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HistoryView: View {
     @ObservedObject var historyViewModel: HistoryViewModel
+    @ObservedObject var receiptViewModel: ReceiptViewModel
+    
     var body: some View {
         NavigationView {
             VStack{
@@ -20,6 +22,7 @@ struct HistoryView: View {
                         Section(header: Text("Scanned Receipts")) {
                             ReceiptDetailsList(
                                 receipt: historyViewModel.scannedReceipts,
+                                viewModel: receiptViewModel,
                                 onRedeem: { receipt in
                                     historyViewModel.redeemedRewards.append(
                                         RedeemedReward(from: receipt)

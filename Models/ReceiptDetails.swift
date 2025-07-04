@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct ReceiptDetails: Identifiable, Codable {
+struct ReceiptDetails: Identifiable, Codable, Equatable, Hashable {
     var id: String
     var storeName: String
     var totalAmount: Double
     var dateScanned: Date
     var pointsEarned: Int
-    var imageURL: String
+    var imageURL: URL?
    
 }
+

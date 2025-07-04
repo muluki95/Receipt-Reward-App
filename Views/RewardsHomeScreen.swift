@@ -12,11 +12,25 @@ struct RewardsHomeScreen: View {
     
     var body: some View {
         VStack {
-            Text("Welcome, Esther")
+            Text("Welcome To Receipts Rewards")
                 .font(.title)
                 .fontWeight(.bold)
+                .padding(.top, 10)
+                .foregroundColor(.blue)
+            
+            Image("HomeImage")
+                .resizable()
+                .scaledToFit()
+                .frame(width:550, height: 400)
+                .cornerRadius(20)
                 .padding()
-            Text("Total Points: 320")
+            
+            Text("Scan Receipts, Earn Rewards")
+                .font(.body)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
         }
     }
 }

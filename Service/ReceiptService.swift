@@ -36,13 +36,13 @@ class ReceiptService {
         try? requestHandler.perform([request]) //executes the OCR request
     }
     
-    func parseReceiptText(_ text: String, imageURL: String) -> ReceiptDetails{
+    func parseReceiptText(_ text: String, imageURL: URL) -> ReceiptDetails {
         let lines = text.components(separatedBy: .newlines)
         let store = lines.first ?? "Unknown Store"
-        let amountLine = lines.first(where: {$0.contains("$")}) ?? "0.00"
+        let amountLine = lines.first(where: { $0.contains("$") }) ?? "0.00"
         let total = Double(amountLine.filter("0123456789.".contains)) ?? 0.0
         
-        let receipt = ReceiptDetails(
+        return ReceiptDetails(
             id: UUID().uuidString,
             storeName: store,
             totalAmount: total,
@@ -50,6 +50,5 @@ class ReceiptService {
             pointsEarned: Int(total),
             imageURL: imageURL
         )
-        return receipt
     }
 }

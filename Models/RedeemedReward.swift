@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RedeemedReward: Identifiable, Codable {
+struct RedeemedReward: Identifiable, Codable, Hashable {
     var id: String
     var title: String
     var imageName: String

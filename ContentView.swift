@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var historyViewModel = HistoryViewModel()
+    @StateObject var receiptViewModel = ReceiptViewModel(historyViewModel: HistoryViewModel())
     var body: some View {
-        MainTabView(historyViewModel: historyViewModel)
+        MainTabView(historyViewModel: historyViewModel, receiptViewModel: receiptViewModel )
     }
 }
 
