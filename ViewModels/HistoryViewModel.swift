@@ -39,7 +39,8 @@ class HistoryViewModel: ObservableObject {
     func fetchRedeemedReward() async {
         
             do{
-                self.redeemedRewards = try await repository.fetchRedeemedRewards()
+                let rewards = try await repository.fetchRedeemedRewards()
+                self.redeemedRewards = rewards.sorted(by: {$0.dateRedeemed > $1.dateRedeemed})
                 
             } catch {
                 print(" Error fetching the receipts: \(error.localizedDescription)")

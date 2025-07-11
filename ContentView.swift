@@ -9,16 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     
-    //@StateObject var historyViewModel = HistoryViewModel()
-    //@StateObject var receiptViewModel = ReceiptViewModel(historyViewModel: HistoryViewModel())
+    @StateObject var historyViewModel = HistoryViewModel()
+    @StateObject var receiptViewModel = ReceiptViewModel(historyViewModel: HistoryViewModel())
     @EnvironmentObject var viewModel: AuthViewModel
     
     
     var body: some View {
         Group {
             if viewModel.userSession != nil {
-               LoginView()
-                //MainTabView(historyViewModel: historyViewModel, receiptViewModel: receiptViewModel )
+              
+                MainTabView(historyViewModel: historyViewModel, receiptViewModel: receiptViewModel )
             } else {
                 CreateAccountView()
             }

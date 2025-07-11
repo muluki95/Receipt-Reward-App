@@ -10,6 +10,7 @@ import SwiftUI
 @MainActor
 class ReceiptViewModel: ObservableObject {
     @Published var receipt: ReceiptDetails?
+    @Published var receipts: [ReceiptDetails] = []
     @Published var allReceipts: [ReceiptDetails] = []
     @Published var searchText = ""
     
@@ -54,9 +55,8 @@ class ReceiptViewModel: ObservableObject {
         
             do{
                 let receipts = try await repository.fetchReceipts()
-                
-                    allReceipts = receipts
-                        
+                self.receipts = receipts.sorted(by: {$0.dateScanned > $1.dateScanned})
+                self.allReceipts = self.receipts
                 
             } catch {
                 print(" Error fetching the receipts: \(error.localizedDescription)")

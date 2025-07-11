@@ -28,6 +28,9 @@ struct InputView: View {
                     .font(.system(size: 15))
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
+                    .disableAutocorrection(true)
+                    .textContentType(.none)
+                    .keyboardType(.default)
                     
                    
                 
@@ -36,6 +39,9 @@ struct InputView: View {
                     .font(.system(size: 15))
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
+                    .disableAutocorrection(true)
+                    .textContentType(.none)
+                    .keyboardType(.default)
                     
                 
             }

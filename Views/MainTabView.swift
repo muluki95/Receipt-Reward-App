@@ -12,6 +12,7 @@ import SwiftUI
 struct MainTabView: View {
     @ObservedObject var historyViewModel: HistoryViewModel
     @ObservedObject var receiptViewModel: ReceiptViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
     
     @State var selectedTab = 0
     
@@ -38,6 +39,11 @@ struct MainTabView: View {
                     Label("Rewards", systemImage:"gift")
                 }
                 .tag(2)
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage:"person.circle")
+                }
+                .tag(3)
                 }
               
         }
@@ -47,4 +53,5 @@ struct MainTabView: View {
 #Preview {
     MainTabView(historyViewModel: HistoryViewModel(),
     receiptViewModel: ReceiptViewModel(historyViewModel: HistoryViewModel()))
+    .environmentObject(AuthViewModel())
 }

@@ -90,17 +90,19 @@ struct CreateAccountView: View {
                 
                 
                 Spacer()
-                Button  {
-                    dismiss()
-                } label: {
+                NavigationLink{
+                    LoginView()
+                        .navigationBarBackButtonHidden(true)
+                }
+                label: {
                     HStack {
                         Text("Already have an account")
-                        Text("Log in ")
+                        Text("Log in")
                             .fontWeight(.semibold)
                     }
-                    .font(.system(size:14))
+                    .font(.system(size: 14))
                 }
-                
+                .navigationBarBackButtonHidden()
             }
             
         }

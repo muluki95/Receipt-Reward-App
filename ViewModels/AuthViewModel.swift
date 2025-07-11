@@ -21,7 +21,7 @@ class AuthViewModel: ObservableObject {
     
     init() {
         Task{
-            await fetchUserData()
+            await fetchUser()
         }
         
     }
@@ -32,12 +32,15 @@ class AuthViewModel: ObservableObject {
         do{
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
-            await fetchUserData()
-            
-        } catch {
-            
-        }
-    }
+            await MainActor.run {
+                            self.userSession = result.user
+                        }
+                        await fetchUser()
+                    } catch {
+                        print("Login failed: \(error.localizedDescription)")
+                        throw error
+                    }
+                }
     
     func createUser(withEmail email: String, password: String, fullname: String) async throws{
         do{
@@ -46,12 +49,16 @@ class AuthViewModel: ObservableObject {
             let user = User(id: result.user.uid,fullname: fullname, email: email )
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
-            await fetchUserData()
-        } catch {
-            print("Failed to create user with error: \(error.localizedDescription)")
-        }
-        
-    }
+            await MainActor.run {
+                            self.userSession = result.user
+                        }
+                        await fetchUser()
+                    } catch {
+                        print("Failed to create user with error: \(error.localizedDescription)")
+                        throw error
+                    }
+                }
+
     
     func logout() {
         do{
@@ -68,7 +75,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func fetchUserData() async {
+    func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }  //if there is a current user it will fetch the rest else it will stop
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
