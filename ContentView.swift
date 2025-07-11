@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var historyViewModel = HistoryViewModel()
-    @StateObject var receiptViewModel = ReceiptViewModel(historyViewModel: HistoryViewModel())
+    
+    //@StateObject var historyViewModel = HistoryViewModel()
+    //@StateObject var receiptViewModel = ReceiptViewModel(historyViewModel: HistoryViewModel())
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    
     var body: some View {
-        MainTabView(historyViewModel: historyViewModel, receiptViewModel: receiptViewModel )
+        Group {
+            if viewModel.userSession != nil {
+               LoginView()
+                //MainTabView(historyViewModel: historyViewModel, receiptViewModel: receiptViewModel )
+            } else {
+                CreateAccountView()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthViewModel())
 }

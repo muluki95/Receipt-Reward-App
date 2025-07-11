@@ -30,9 +30,14 @@ struct MainTabView: View {
             
             AllReceipts(viewModel: receiptViewModel)
                 .tabItem {
-                    Label("All Receipts", systemImage:"note.text.badge.plus")
+                    Label("Receipts", systemImage:"note.text.badge.plus")
                 }
                 .tag(1)
+            AllRedeemedRewards(viewModel: historyViewModel)
+                .tabItem {
+                    Label("Rewards", systemImage:"gift")
+                }
+                .tag(2)
                 }
               
         }

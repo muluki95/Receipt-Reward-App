@@ -27,13 +27,35 @@ class HistoryViewModel: ObservableObject {
         
         do {
             try await repository.save(reward: reward)
-            
-           
-                redeemedRewards.append(reward)
+            redeemedRewards.append(reward)
             
             
         } catch {
             print("Failed to save reward: \(error.localizedDescription)")
         }
     }
+    //fetch method
+    
+    func fetchRedeemedReward() async {
+        
+            do{
+                self.redeemedRewards = try await repository.fetchRedeemedRewards()
+                
+            } catch {
+                print(" Error fetching the receipts: \(error.localizedDescription)")
+            
+        }
+    }
+    
+    //delete method
+    
+    func deleteRedeemedReward(_ reward: RedeemedReward) async {
+            do{
+                try await repository.deleteRedeemedReward(id: reward.id)
+                redeemedRewards.removeAll{$0.id == reward.id}
+                
+            } catch {
+                print("Failed to delete receipt: \(error.localizedDescription)")
+            }
+        }
 }

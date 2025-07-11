@@ -19,4 +19,24 @@ class RedeemedRewardRepository {
         
         print("Redeemed reward saved successfully")
     }
+    
+    //fetch method
+    func fetchRedeemedRewards() async throws -> [RedeemedReward]{
+        let snapshot =  try await db.collection(collection).getDocuments()
+        let redeemedRewards = snapshot.documents.compactMap { document in
+            do{
+                return try document.data(as: RedeemedReward.self)
+            } catch {
+                print("Failed to decode document: \(document.documentID), error: \(error)")
+                return nil
+            }
+            
+        }
+       return redeemedRewards
+    }
+    
+    //delete
+    func deleteRedeemedReward(id: String) async throws {
+        try await db.collection(collection).document(id).delete()
+    }
 }

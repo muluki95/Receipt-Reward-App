@@ -1,15 +1,30 @@
 //
-//  UserModel.swift
+//  User.swift
 //  ReceiptsRewards
 //
-//  Created by Esther Nzomo on 5/31/25.
+//  Created by Esther Nzomo on 7/8/25.
 //
 
 import Foundation
-import SwiftUI
+ 
 
-struct UserModel: Identifiable, Codable {
+struct User: Codable, Identifiable {
     let id: String
-    var name: String
-    var totalPoints: Int
+    let fullname: String
+    let email: String
+    
+    
+    var initials: String {
+        let formatter = PersonNameComponentsFormatter()
+        if let components = formatter.personNameComponents(from: fullname){
+            formatter.style = .abbreviated
+            return formatter.string(from: components)
+        }
+        
+        return ""
+    }
+}
+
+extension User {
+    static var sample = User(id: "1", fullname:"Esther Nzomo", email:"esther@example.com")
 }

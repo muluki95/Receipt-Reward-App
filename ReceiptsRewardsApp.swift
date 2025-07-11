@@ -13,12 +13,15 @@ import Firebase
 @main
 
 struct ReceiptsRewardsApp: App {
+    @StateObject var viewModel = AuthViewModel()
     init() {
         FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
-            MainTabView(historyViewModel: HistoryViewModel(), receiptViewModel: ReceiptViewModel(historyViewModel: HistoryViewModel()))
+            //MainTabView(historyViewModel: HistoryViewModel(), receiptViewModel: ReceiptViewModel(historyViewModel: HistoryViewModel()))
+            ContentView()
+                .environmentObject(viewModel)
         }
     }
 }
