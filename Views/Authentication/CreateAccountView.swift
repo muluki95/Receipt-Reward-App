@@ -40,19 +40,33 @@ struct CreateAccountView: View {
                         isSecureField: true
                         
                     )
-                    
-                    InputView (
-                        text: $confirmPassword,
-                        title: " Confirm Password",
-                        placeholder: "Confirm your password",
-                        isSecureField: true
-                     )
-                     
-                    
+                    ZStack(alignment: .trailing){
+                        
+                        InputView (
+                            text: $confirmPassword,
+                            title: " Confirm Password",
+                            placeholder: "Confirm your password",
+                            isSecureField: true
+                        )
+                        if !password.isEmpty && !confirmPassword.isEmpty {
+                            if password == confirmPassword{
+                                Image(systemName: "checkmark.circle.fill")
+                                    .imageScale(.large)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.green)
+                            } else {
+                                Image(systemName: "xmark.circle.fill")
+                                    .imageScale(.large)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        
+                    }
                 }
                 .padding()
                 
-                //login button
+                //create account  button
                 Button(action:{
                     Task{
                         try await viewModel.createUser(withEmail: email, password: password, fullname: fullname)
@@ -67,6 +81,8 @@ struct CreateAccountView: View {
                 .frame(width: 280, height: 50)
                 .background(Color.blue)
                 .foregroundColor(.white)
+                .disabled(formIsValid == false)
+                .opacity(formIsValid == false ? 0.5 : 1)
                 .cornerRadius(10)
                 
                 
@@ -91,6 +107,16 @@ struct CreateAccountView: View {
     }
 }
     
+extension CreateAccountView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty &&
+        email.contains("@") &&
+        !password.isEmpty &&
+        password.count >= 6 &&
+        confirmPassword == password  &&
+        !fullname.isEmpty
+    }
+}
    
 #Preview {
     CreateAccountView()

@@ -56,6 +56,8 @@ struct LoginView: View {
                 .frame(width: 280, height: 50)
                 .background(Color.blue)
                 .foregroundColor(.white)
+                .disabled(formIsValid == false)
+                .opacity(formIsValid == false ? 0.5 : 1)
                 .cornerRadius(10)
                
                
@@ -83,6 +85,11 @@ struct LoginView: View {
     }
 }
 
+extension LoginView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty && email.contains("@") && !password.isEmpty && password.count >= 6
+    }
+}
 #Preview {
     LoginView()
         .environmentObject(AuthViewModel())
